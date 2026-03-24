@@ -58,7 +58,7 @@ pipeline {
         stage('Docker Container Run') {
             steps {
                 echo 'Docker Container Run'
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu',
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'target',
                 transfers: [sshTransfer(cleanRemote: false,
                 excludes: '',
                 execCommand: '''
@@ -73,7 +73,7 @@ pipeline {
                 patternSeparator: '[, ]+',
                 remoteDirectory: '',
                 remoteDirectorySDF: false,
-                removePrefix: 'ubuntu',
+                removePrefix: 'target',
                 sourceFiles: '')],
                 usePromotionTimestamp: false,
                 useWorkspaceInPromotion: false,
