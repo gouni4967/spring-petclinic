@@ -11,8 +11,6 @@ pipeline {
 
         // Credentials
         DOCKERHUB_CRED = credentials('dockerCredentials')
-        DOCKERHUB_CRED_USR = credentials('dockerCredentials').username
-        DOCKERHUB_CRED_PSW = credentials('dockerCredentials').password
     }    
     stages {
         stage('Git Clone') {
