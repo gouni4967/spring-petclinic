@@ -5,6 +5,14 @@ pipeline {
         jdk 'JDK21'
         maven 'M3'
     }
+    environment{
+        // 환경변수 지정
+        DOCKER_IMAGE_NAME = "spring-petclinic"
+
+        // Credentials
+        DOCKERHUB_CRED = credentials('dockerCredentials')
+        DOCKERHUB_CRED_USR = credentials('dockerCredentials').username
+    }    
     stages {
         stage('Git Clone') {
             steps {
@@ -20,6 +28,10 @@ pipeline {
         stage('Docker Image Create') {
             steps {
                 echo 'Docker Image Create'
+                sh '''
+                docker build -t ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}
+                docker tag ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} ${DOCKERHUB_CRED_USR}/${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}
+                '''
             }
         }
         stage('Docker Hub Login') {
